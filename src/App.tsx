@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
+import CryptoRouter from "./Router";
 
 const GlobalStyle = createGlobalStyle`
 //styled-reset
@@ -65,20 +65,11 @@ a {
 }
 `;
 
-const Container = styled.div`
-  background-color: ${(props) => props.theme.bgColor};
-`;
-const H1 = styled.h1`
-  color: ${(props) => props.theme.accentColor};
-`;
-
 function App() {
   return (
     <>
       <GlobalStyle />
-      <Container>
-        <H1>Protected</H1>
-      </Container>
+      <CryptoRouter />
     </>
   );
 }
