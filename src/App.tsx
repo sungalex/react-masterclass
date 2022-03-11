@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Reset } from "styled-reset";
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.bgColor};
@@ -10,9 +11,12 @@ const H1 = styled.h1`
 
 function App() {
   return (
-    <Container>
-      <H1>Protected</H1>
-    </Container>
+    <>
+      <Reset />
+      <Container>
+        <H1>Protected</H1>
+      </Container>
+    </>
   );
 }
 
