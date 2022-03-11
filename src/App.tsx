@@ -2,13 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 
-const Container = styled.div`
-  background-color: ${(props) => props.theme.bgColor};
-`;
-const H1 = styled.h1`
-  color: ${(props) => props.theme.textColor};
-`;
-
 const GlobalStyle = createGlobalStyle`
 //styled-reset
 html, body, div, span, applet, object, iframe,
@@ -70,6 +63,13 @@ body {
 a {
   text-decoration: none;
 }
+`;
+
+const Container = styled.div`
+  background-color: ${(props) => props.theme.bgColor};
+`;
+const H1 = styled.h1`
+  color: ${(props) => props.theme.accentColor};
 `;
 
 function App() {
