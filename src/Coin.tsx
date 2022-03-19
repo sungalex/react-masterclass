@@ -30,7 +30,7 @@ const Overview = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: rgba(0, 0, 0, 0.5);
-  padding: 15px 20px;
+  padding: 15px;
   border-radius: 10px;
 `;
 
@@ -38,10 +38,11 @@ const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0px 5px;
 
   span:first-child {
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 400;
     text-transform: uppercase;
     margin-bottom: 5px;
   }
