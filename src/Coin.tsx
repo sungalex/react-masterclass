@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
 import { useParams, useLocation } from "react-router";
-import { Link, Outlet, useMatch } from "react-router-dom";
+import { Link, useMatch, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "./api";
+import Chart from "./Chart";
+import Price from "./Price";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -253,12 +255,14 @@ function Coin() {
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
-
-          {/*
-            Nested Router:
+          {/* Nested Router:
             https://reactrouter.com/docs/en/v6/getting-started/overview#nested-routes
-            */}
-          <Outlet />
+            */
+          /* <Outlet /> */}
+          <Routes>
+            <Route path="chart" element={<Chart coinId={coinId!} />} />
+            <Route path="price" element={<Price coinId={coinId!} />} />
+          </Routes>
         </>
       )}
     </Container>
