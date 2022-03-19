@@ -1,9 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
-import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router";
 import { Link, Outlet, useMatch } from "react-router-dom";
 import styled from "styled-components";
+import { useQuery } from "react-query";
+import { fetchCoinInfo, fetchCoinTickers } from "./api";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -84,7 +85,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   }
 `;
 
-interface IRouteState {
+interface ILocation {
   pathname: string;
   search: string;
   hash: string;
@@ -161,29 +162,20 @@ interface Quotes {
 }
 
 function Coin() {
-  const [loading, setLoading] = useState(true);
-  const [infoData, setInfo] = useState<IInfoData>();
-  const [priceData, setPriceInfo] = useState<IPriceData>();
   const { coinId } = useParams();
-  const location = useLocation() as IRouteState;
+  const { state } = useLocation() as ILocation;
   const chartMatch = useMatch("/:coinId/chart");
   const priceMatch = useMatch("/:coinId/price");
 
-  useEffect(() => {
-    (async () => {
-      const infoData = await (
-        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-      ).json();
-      setInfo(infoData);
-      // console.log(infoData);
-      const priceData = await (
-        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-      ).json();
-      setPriceInfo(priceData);
-      // console.log(priceData);
-      setLoading(false);
-    })();
-  }, [coinId]);
+  const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
+    [coinId, "info"],
+    () => fetchCoinInfo(coinId!) // ! => Non-null assertion operator
+  );
+  const { isLoading: tickersLoading, data: tickersData } = useQuery<IPriceData>(
+    [coinId, "tickers"],
+    () => fetchCoinTickers(coinId ? coinId : "")
+  );
+  const loading = infoLoading || tickersLoading;
 
   return (
     <Container>
@@ -195,8 +187,7 @@ function Coin() {
         </HomeBtn>
         <Title>
           <Link to={`/${coinId}`}>
-            {location?.state?.coinName ||
-              (loading ? "Loading..." : infoData?.name)}
+            {state?.coinName || (loading ? "Loading..." : infoData?.name)}
           </Link>
         </Title>
       </Header>
@@ -218,7 +209,7 @@ function Coin() {
               <span>
                 $
                 {new Intl.NumberFormat().format(
-                  priceData?.quotes.USD.market_cap || 0
+                  tickersData?.quotes?.USD.market_cap || 0
                 )}
               </span>
             </OverviewItem>
@@ -231,14 +222,14 @@ function Coin() {
                 {new Intl.NumberFormat("en-IN", {
                   style: "currency",
                   currency: "USD",
-                }).format(priceData?.quotes.USD.ath_price || 0)}
+                }).format(tickersData?.quotes?.USD.ath_price || 0)}
               </span>
             </OverviewItem>
             <OverviewItem>
               <span>24h Change</span>
               <span>
                 {new Intl.NumberFormat().format(
-                  priceData?.quotes.USD.percent_change_24h || 0
+                  tickersData?.quotes?.USD.percent_change_24h || 0
                 )}
                 %
               </span>
@@ -250,7 +241,7 @@ function Coin() {
                   style: "currency",
                   currency: "USD",
                   maximumFractionDigits: 2,
-                }).format(priceData?.quotes.USD.price || 0)}
+                }).format(tickersData?.quotes?.USD.price || 0)}
               </span>
             </OverviewItem>
           </Overview>
