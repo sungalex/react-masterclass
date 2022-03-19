@@ -1,7 +1,6 @@
-import { useEffect } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet, useMatch } from "react-router-dom";
 import styled from "styled-components";
 
 const Title = styled.h1`
@@ -51,6 +50,27 @@ const OverviewItem = styled.div`
 const Description = styled.div`
   margin: 20px 10px;
   font-weight: 300;
+`;
+
+const Tabs = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 25px 0px;
+  gap: 10px;
+`;
+
+const Tab = styled.span<{ isActive: boolean }>`
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 400;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 7px;
+  color: ${(props) =>
+    props.isActive ? props.theme.accentColor : props.theme.textColor};
+  a {
+    display: block;
+  }
 `;
 
 interface IRouteState {
@@ -131,10 +151,12 @@ interface Quotes {
 
 function Coin() {
   const [loading, setLoading] = useState(true);
-  const { coinId } = useParams();
-  const { state } = useLocation() as IRouteState;
   const [infoData, setInfo] = useState<IInfoData>();
   const [priceData, setPriceInfo] = useState<IPriceData>();
+  const { coinId } = useParams();
+  const location = useLocation() as IRouteState;
+  const chartMatch = useMatch("/:coinId/chart");
+  const priceMatch = useMatch("/:coinId/price");
 
   useEffect(() => {
     (async () => {
@@ -142,12 +164,12 @@ function Coin() {
         await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
       ).json();
       setInfo(infoData);
-      console.log(infoData);
+      // console.log(infoData);
       const priceData = await (
         await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
       ).json();
       setPriceInfo(priceData);
-      console.log(priceData);
+      // console.log(priceData);
       setLoading(false);
     })();
   }, [coinId]);
@@ -156,7 +178,8 @@ function Coin() {
     <Container>
       <Header>
         <Title>
-          {state?.coinName || (loading ? "Loading..." : infoData?.name)}
+          {location?.state?.coinName ||
+            (loading ? "Loading..." : infoData?.name)}
         </Title>
       </Header>
       {loading ? (
@@ -213,6 +236,15 @@ function Coin() {
               </span>
             </OverviewItem>
           </Overview>
+          <Tabs>
+            <Tab isActive={chartMatch !== null}>
+              <Link to={`/${coinId}/chart`}>Chart</Link>
+            </Tab>
+            <Tab isActive={priceMatch !== null}>
+              <Link to={`/${coinId}/price`}>Price</Link>
+            </Tab>
+          </Tabs>
+
           {/*
             Nested Router:
             https://reactrouter.com/docs/en/v6/getting-started/overview#nested-routes
