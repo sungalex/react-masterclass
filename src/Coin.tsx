@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useState } from "react";
 import { useParams, useLocation } from "react-router";
+import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 const Title = styled.h1`
@@ -211,6 +212,11 @@ function Coin() {
               </span>
             </OverviewItem>
           </Overview>
+          {/*
+            Nested Router:
+            https://reactrouter.com/docs/en/v6/getting-started/overview#nested-routes
+            */}
+          <Outlet />
         </>
       )}
     </Container>
