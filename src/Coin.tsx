@@ -1,12 +1,9 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router";
 import { Link, Outlet, useMatch } from "react-router-dom";
 import styled from "styled-components";
-
-const Title = styled.h1`
-  font-size: 24px;
-  color: ${(props) => props.theme.accentColor};
-`;
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -19,6 +16,20 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+`;
+
+const HomeBtn = styled.div`
+  position: absolute;
+  top: suto;
+  left: 0;
+  padding: 3px 10px;
+  border-radius: 5px;
+`;
+
+const Title = styled.h1`
+  font-size: 24px;
+  color: ${(props) => props.theme.accentColor};
 `;
 
 const Loader = styled.div`
@@ -177,9 +188,16 @@ function Coin() {
   return (
     <Container>
       <Header>
+        <HomeBtn>
+          <Link to={"/"}>
+            <FontAwesomeIcon icon={faAngleDoubleLeft} size="2x" />
+          </Link>
+        </HomeBtn>
         <Title>
-          {location?.state?.coinName ||
-            (loading ? "Loading..." : infoData?.name)}
+          <Link to={`/${coinId}`}>
+            {location?.state?.coinName ||
+              (loading ? "Loading..." : infoData?.name)}
+          </Link>
         </Title>
       </Header>
       {loading ? (
