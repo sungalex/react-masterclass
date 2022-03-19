@@ -50,7 +50,7 @@ const Img = styled.img`
   margin-right: 10px;
 `;
 
-interface CoinInterface {
+interface ICoin {
   id: string;
   name: string;
   symbol: string;
@@ -61,7 +61,7 @@ interface CoinInterface {
 }
 
 function Coins() {
-  const [coins, setCoins] = useState<CoinInterface[]>([]);
+  const [coins, setCoins] = useState<ICoin[]>([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     (async () => {
@@ -83,7 +83,7 @@ function Coins() {
         <CoinList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>
+              <Link to={`/${coin.id}`} state={{ coinName: coin.name }}>
                 <Img
                   src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                 />
