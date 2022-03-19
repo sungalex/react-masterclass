@@ -1,6 +1,7 @@
 import React from "react";
 import { createGlobalStyle } from "styled-components";
 import CryptoRouter from "./Router";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 const GlobalStyle = createGlobalStyle`
 //styled-reset
@@ -73,6 +74,7 @@ function App() {
     <>
       <GlobalStyle />
       <CryptoRouter />
+      <ReactQueryDevtools initialIsOpen={true} />
     </>
   );
 }
