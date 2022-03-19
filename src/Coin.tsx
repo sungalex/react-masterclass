@@ -32,14 +32,57 @@ interface IRouteState {
   key: string;
 }
 
+// JSON 데이터를 타입스크립트 타입으로 빠르게 변환시켜주는 사이트
+// https://app.quicktype.io/
+
+interface IInfoData {
+  id: string;
+  name: string;
+  symbol: string;
+  rank: number;
+  is_new: boolean;
+  is_active: boolean;
+  type: string;
+  tags: Tag[];
+  description: string;
+  message: string;
+  open_source: boolean;
+  started_at: Date;
+  development_status: string;
+  hardware_wallet: boolean;
+  proof_type: string;
+  org_structure: string;
+  hash_algorithm: string;
+  first_data_at: Date;
+  last_data_at: Date;
+}
+
+interface Tag {
+  id: string;
+  name: string;
+  coin_counter: number;
+  ico_counter: number;
+}
+
+interface IPriceData {
+  time_open: Date;
+  time_close: Date;
+  open: number;
+  high: number;
+  low: number;
+  close: number;
+  volume: number;
+  market_cap: number;
+}
+
 function Coin() {
   const [loading, setLoading] = useState(true);
   const { coinId } = useParams();
   const {
     state: { coinName },
   } = useLocation() as IRouteState;
-  const [info, setInfo] = useState({});
-  const [priceInfo, setPriceInfo] = useState({});
+  const [infoData, setInfo] = useState<IInfoData>();
+  const [priceData, setPriceInfo] = useState<IPriceData>();
 
   useEffect(() => {
     (async () => {
@@ -54,7 +97,7 @@ function Coin() {
       ).json();
       setPriceInfo(priceData);
     })();
-  }, []);
+  }, [coinId]);
 
   return (
     <Container>
