@@ -8,6 +8,7 @@ import { fetchCoinInfo, fetchCoinTickers } from "./api";
 import Chart from "./Chart";
 import Price from "./Price";
 import { Helmet } from "react-helmet";
+import CandleChart from "./CandleChart";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -69,7 +70,7 @@ const Description = styled.div`
 
 const Tabs = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   margin: 25px 0px;
   gap: 10px;
 `;
@@ -169,6 +170,7 @@ function Coin() {
   const { state } = useLocation() as ILocation;
   const chartMatch = useMatch("/:coinId/chart");
   const priceMatch = useMatch("/:coinId/price");
+  const candleMatch = useMatch("/:coinId/candle-chart");
 
   const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
     [coinId, "info"],
@@ -259,7 +261,10 @@ function Coin() {
           </Overview>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Chart</Link>
+              <Link to={`/${coinId}/chart`}>Area Chart</Link>
+            </Tab>
+            <Tab isActive={candleMatch !== null}>
+              <Link to={`/${coinId}/candle-chart`}>Candle Chart</Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
               <Link to={`/${coinId}/price`}>Price</Link>
@@ -271,6 +276,10 @@ function Coin() {
           /* <Outlet /> */}
           <Routes>
             <Route path="chart" element={<Chart coinId={coinId!} />} />
+            <Route
+              path="candle-chart"
+              element={<CandleChart coinId={coinId!} />}
+            />
             <Route path="price" element={<Price coinId={coinId!} />} />
           </Routes>
         </>
