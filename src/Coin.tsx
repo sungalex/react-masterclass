@@ -194,7 +194,7 @@ function Coin() {
       <Header>
         <HomeBtn>
           <Link to={"/"}>
-            <FontAwesomeIcon icon={faAngleDoubleLeft} size="2x" />
+            <FontAwesomeIcon icon={faAngleDoubleLeft} size="lg" />
           </Link>
         </HomeBtn>
         <Title>

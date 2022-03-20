@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "./api";
 import { Helmet } from "react-helmet";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -35,6 +37,10 @@ const Coin = styled.li`
       color: ${(props) => props.theme.accentColor};
     }
   }
+`;
+
+const Icon = styled.span`
+  margin-left: 10px;
 `;
 
 const Title = styled.h1`
@@ -83,7 +89,10 @@ function Coins() {
                 <Img
                   src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                 />
-                {coin.name} &rarr;
+                {coin.symbol} - {coin.name}
+                <Icon>
+                  <FontAwesomeIcon icon={faAngleDoubleRight} fade size="sm" />
+                </Icon>
               </Link>
             </Coin>
           ))}
