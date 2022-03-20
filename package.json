@@ -30,7 +30,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "gh-pages -d build",
+    "predeploy": "npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -53,6 +55,8 @@
   "devDependencies": {
     "@types/react-query": "^1.2.9",
     "@types/react-router-dom": "^5.3.3",
-    "@types/styled-components": "^5.1.24"
-  }
+    "@types/styled-components": "^5.1.24",
+    "gh-pages": "^3.2.3"
+  },
+  "homepage": "https://sungalex.github.io/react-masterclass"
 }
