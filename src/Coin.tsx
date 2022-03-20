@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "./api";
 import Chart from "./Chart";
 import Price from "./Price";
+import { Helmet } from "react-helmet";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -184,6 +185,12 @@ function Coin() {
 
   return (
     <Container>
+      {/* changing <head> tag */}
+      <Helmet>
+        <title>
+          {state?.coinName || (loading ? "Loading..." : infoData?.name)}
+        </title>
+      </Helmet>
       <Header>
         <HomeBtn>
           <Link to={"/"}>
