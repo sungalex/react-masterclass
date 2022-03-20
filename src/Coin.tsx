@@ -7,7 +7,7 @@ import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "./api";
 import Chart from "./Chart";
 import Price from "./Price";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async"; // using "react-helmet-async" rather than "react-helmet"
 import CandleChart from "./CandleChart";
 
 const Container = styled.div`
