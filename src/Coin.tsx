@@ -175,7 +175,10 @@ function Coin() {
   );
   const { isLoading: tickersLoading, data: tickersData } = useQuery<IPriceData>(
     [coinId, "tickers"],
-    () => fetchCoinTickers(coinId ? coinId : "")
+    () => fetchCoinTickers(coinId ? coinId : ""),
+    {
+      refetchInterval: 5000,
+    }
   );
   const loading = infoLoading || tickersLoading;
 
@@ -207,6 +210,19 @@ function Coin() {
               <span>{infoData?.symbol}</span>
             </OverviewItem>
             <OverviewItem>
+              <span>Price</span>
+              <span>
+                {new Intl.NumberFormat("en-IN", {
+                  style: "currency",
+                  currency: "USD",
+                  maximumFractionDigits: 3,
+                }).format(tickersData?.quotes?.USD.price || 0)}
+              </span>
+            </OverviewItem>
+          </Overview>
+          <Description>{infoData?.description}</Description>
+          <Overview>
+            <OverviewItem>
               <span>Market Cap</span>
               <span>
                 $
@@ -215,9 +231,6 @@ function Coin() {
                 )}
               </span>
             </OverviewItem>
-          </Overview>
-          <Description>{infoData?.description}</Description>
-          <Overview>
             <OverviewItem>
               <span>ATH</span>
               <span>
@@ -234,16 +247,6 @@ function Coin() {
                   tickersData?.quotes?.USD.percent_change_24h || 0
                 )}
                 %
-              </span>
-            </OverviewItem>
-            <OverviewItem>
-              <span>Price</span>
-              <span>
-                {new Intl.NumberFormat("en-IN", {
-                  style: "currency",
-                  currency: "USD",
-                  maximumFractionDigits: 2,
-                }).format(tickersData?.quotes?.USD.price || 0)}
               </span>
             </OverviewItem>
           </Overview>
