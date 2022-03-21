@@ -2,6 +2,14 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Crypto Tracker
+
+- React ToDo App with TypeScript, [Styled Components](https://styled-components.com/docs), [React Query](https://react-query.tanstack.com/overview), [React Router](https://reactrouter.com/docs/en/v6)
+
+- [React JS 마스터클래스 - CRYPTO TRACKER](https://nomadcoders.co/react-masterclass/lectures/3322)
+
+- [coinpaprika](https://api.coinpaprika.com/#tag/Coins)
+
 ## Available Scripts
 
 In the project directory, you can run:
