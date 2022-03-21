@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## ToDo App
 
-- React ToDo App with [recoil](https://recoiljs.org/ko/) for State Management
+- React ToDo App with [Recoil for State Management](https://recoiljs.org/ko/) and [React Hook Form](https://react-hook-form.com/get-started)
 
 - [React JS 마스터클래스 - STATE MANAGEMENT](https://nomadcoders.co/react-masterclass/lectures/3348)
 
