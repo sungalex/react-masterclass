@@ -2,16 +2,22 @@ import React, { useState } from "react";
 
 function ToDoList() {
   const [toDo, setToDo] = useState("");
+  const [toDoError, setToDoError] = useState("");
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
     const {
       currentTarget: { value },
     } = event;
+    setToDoError("");
     setToDo(value);
   };
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(toDo);
-    setToDo("");
+    if (toDo.length < 10) {
+      setToDoError("To do should be longer");
+    } else {
+      console.log("submit:", toDo);
+      setToDo("");
+    }
   };
   return (
     <div>
@@ -23,6 +29,7 @@ function ToDoList() {
           placeholder="Write a to do"
         />
         <button>Add</button>
+        <span>{toDoError !== "" ? toDoError : null}</span>
       </form>
     </div>
   );
