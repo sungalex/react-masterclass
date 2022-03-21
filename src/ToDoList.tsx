@@ -1,3 +1,4 @@
+/*
 import React, { useState } from "react";
 
 function ToDoList() {
@@ -30,6 +31,26 @@ function ToDoList() {
         />
         <button>Add</button>
         <span>{toDoError !== "" ? toDoError : null}</span>
+      </form>
+    </div>
+  );
+} */
+
+import { useForm } from "react-hook-form";
+
+function ToDoList() {
+  const { register, watch } = useForm();
+  console.log(watch());
+  return (
+    <div>
+      <form>
+        <input {...register("email")} placeholder="Email" />
+        <input {...register("firstName")} placeholder="First Name" />
+        <input {...register("lastName")} placeholder="Last Name" />
+        <input {...register("username")} placeholder="Username" />
+        <input {...register("password")} placeholder="Password" />
+        <input {...register("password1")} placeholder="Password1" />
+        <button>Add</button>
       </form>
     </div>
   );
