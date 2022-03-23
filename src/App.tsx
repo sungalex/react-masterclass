@@ -1,4 +1,5 @@
 import React from "react";
+import { RecoilRoot } from "recoil";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import ToDoList from "./ToDoList";
@@ -73,10 +74,12 @@ const Container = styled.div`
 function App() {
   return (
     <>
-      <GlobalStyle />
-      <Container>
-        <ToDoList />
-      </Container>
+      <RecoilRoot>
+        <GlobalStyle />
+        <Container>
+          <ToDoList />
+        </Container>
+      </RecoilRoot>
     </>
   );
 }
