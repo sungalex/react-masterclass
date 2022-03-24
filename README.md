@@ -2,6 +2,12 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## ToDo App
+
+- React ToDo App with [Recoil for State Management](https://recoiljs.org/ko/) and [React Hook Form](https://react-hook-form.com/get-started)
+
+- [React JS 마스터클래스 - STATE MANAGEMENT](https://nomadcoders.co/react-masterclass/lectures/3348)
+
 ## Available Scripts
 
 In the project directory, you can run:
