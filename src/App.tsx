@@ -2,7 +2,7 @@ import React from "react";
 import { RecoilRoot } from "recoil";
 import styled from "styled-components";
 import { createGlobalStyle } from "styled-components";
-import ToDoList from "./ToDoList";
+import ToDoList from "./components/ToDoList";
 
 const GlobalStyle = createGlobalStyle`
 //styled-reset
