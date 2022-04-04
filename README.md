@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## TRELLO CLONE
+
+- React Trello Clone with [react-beautiful-dnd](https://www.npmjs.com/package/react-beautiful-dnd)
+
 ## Available Scripts
 
 In the project directory, you can run:
