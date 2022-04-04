@@ -2,6 +2,20 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Crypto Tracker
+
+- React Crypto Tracker with
+  [styled-components](https://styled-components.com/docs/basics),
+  [typescript](https://www.typescriptlang.org/),
+  [react-router-dom](https://v5.reactrouter.com/web/guides/quick-start),
+  [react-query](https://react-query.tanstack.com/overview),
+  [react-apexcharts](https://apexcharts.com/docs/react-charts/),
+  [react-helmet-async](https://www.npmjs.com/package/react-helmet-async)
+
+- [Coinpaprika API](https://api.coinpaprika.com/) & [Crypto Icons](https://cryptoicons.org/api/icon/eth/200)
+
+- [React JS 마스터클래스 - CRYPTO TRACKER](https://nomadcoders.co/react-masterclass/lectures/3322)
+
 ## Available Scripts
 
 In the project directory, you can run:
