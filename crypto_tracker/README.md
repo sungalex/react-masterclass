@@ -12,7 +12,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   [react-apexcharts](https://apexcharts.com/docs/react-charts/),
   [react-helmet-async](https://www.npmjs.com/package/react-helmet-async)
 
-- [Coinpaprika API](https://api.coinpaprika.com/) & [Crypto Icons](https://cryptoicons.org/api/icon/eth/200)
+- [Coinpaprika API](https://api.coinpaprika.com/)
 
 - [React JS 마스터클래스 - CRYPTO TRACKER](https://nomadcoders.co/react-masterclass/lectures/3322)
 
