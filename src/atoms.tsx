@@ -1,1 +1,6 @@
-import { atom, selector } from "recoil";
+import { atom } from "recoil";
+
+export const toDoState = atom({
+  key: "toDo",
+  default: [],
+});
