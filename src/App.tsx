@@ -1,12 +1,8 @@
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-} from "react-beautiful-dnd";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState } from "./atoms";
+import DragabbleCard from "./Components/DragabbleCard";
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,13 +28,6 @@ const Board = styled.div`
   min-height: 200px;
 `;
 
-const Card = styled.div`
-  border-radius: 5px;
-  margin-top: 5px;
-  padding: 10px;
-  background-color: ${(props) => props.theme.cardColor};
-`;
-
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
@@ -46,15 +35,9 @@ function App() {
     setToDos((oldToDos) => {
       const newToDos = [...oldToDos];
       // Delete item on source.index
-      console.log("Delete item on", source.index);
-      console.log(newToDos);
       newToDos.splice(source.index, 1);
-      console.log("Items after deleting");
-      console.log(newToDos);
       // Put back the item on the destination.index
-      console.log("Put back", draggableId, "on", destination.index);
       newToDos.splice(destination.index, 0, draggableId);
-      console.log(newToDos);
       return newToDos;
     });
   };
@@ -66,16 +49,7 @@ function App() {
             {(provided) => (
               <Board ref={provided.innerRef} {...provided.droppableProps}>
                 {toDos.map((toDo, index) => (
-                  <Draggable draggableId={toDo} key={toDo} index={index}>
-                    {(provided) => (
-                      <Card
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}>
-                        {toDo}
-                      </Card>
-                    )}
-                  </Draggable>
+                  <DragabbleCard key={toDo} toDo={toDo} index={index} />
                 ))}
                 {provided.placeholder}
               </Board>
