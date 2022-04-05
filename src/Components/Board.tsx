@@ -11,12 +11,13 @@ const Wrapper = styled.div`
 `;
 
 interface IBoardProps {
+  boardId: string;
   toDos: string[];
 }
 
-function Board({ toDos }: IBoardProps) {
+function Board({ boardId, toDos }: IBoardProps) {
   return (
-    <Droppable droppableId="one">
+    <Droppable droppableId={boardId}>
       {(provided) => (
         <Wrapper ref={provided.innerRef} {...provided.droppableProps}>
           {toDos.map((toDo, index) => (

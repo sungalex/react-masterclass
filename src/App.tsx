@@ -6,7 +6,7 @@ import Board from "./Components/Board";
 
 const Wrapper = styled.div`
   display: flex;
-  max-width: 480px;
+  max-width: 680px;
   width: 100%;
   margin: 0 auto;
   justify-content: center;
@@ -17,27 +17,30 @@ const Wrapper = styled.div`
 const Boards = styled.div`
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(1, 1fr);
+  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
 `;
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
     if (!destination) return;
-    setToDos((oldToDos) => {
+    /*     setToDos((oldToDos) => {
       const newToDos = [...oldToDos];
       // Delete item on source.index
       newToDos.splice(source.index, 1);
       // Put back the item on the destination.index
       newToDos.splice(destination.index, 0, draggableId);
       return newToDos;
-    });
+    }); */
   };
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Wrapper>
         <Boards>
-          <Board toDos={toDos}></Board>
+          {Object.keys(toDos).map((boardId) => (
+            <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
+          ))}
         </Boards>
       </Wrapper>
     </DragDropContext>
