@@ -94,6 +94,10 @@ function App() {
   useEffect(() => {
     localStorage.setItem("toDoStorage", JSON.stringify(toDos));
     localStorage.setItem("trashStorage", JSON.stringify(trash));
+    console.log(
+      "local storage:",
+      JSON.parse(localStorage.getItem("toDoStorage") as string)
+    );
   }, [toDos, trash]);
 
   console.log("toDos:", toDos);
