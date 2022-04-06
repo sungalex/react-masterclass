@@ -1,5 +1,6 @@
+import { useEffect } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState, trashState } from "./atoms";
 import Board from "./Components/Board";
@@ -35,7 +36,7 @@ const Title = styled.h1`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const setTrash = useSetRecoilState(trashState);
+  const [trash, setTrash] = useRecoilState(trashState);
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
     if (destination?.droppableId === "Trash") {
@@ -80,7 +81,23 @@ function App() {
       });
     }
   };
+  useEffect(() => {
+    const storageToDos = JSON.parse(
+      localStorage.getItem("toDoStorage") as string
+    );
+    const storageTrashs = JSON.parse(
+      localStorage.getItem("trashStorage") as string
+    );
+    setToDos(storageToDos);
+    setTrash(storageTrashs);
+  }, [setToDos, setTrash]);
+  useEffect(() => {
+    localStorage.setItem("toDoStorage", JSON.stringify(toDos));
+    localStorage.setItem("trashStorage", JSON.stringify(trash));
+  }, [toDos, trash]);
+
   console.log("toDos:", toDos);
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Title>Trello Clone</Title>
