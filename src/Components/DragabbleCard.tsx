@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Card = styled.div`
   border-radius: 5px;
-  margin-top: 5px;
+  margin: 5px;
   padding: 10px;
   background-color: ${(props) => props.theme.cardColor};
 `;
