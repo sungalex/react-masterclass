@@ -23,15 +23,15 @@ const Boards = styled.div`
 
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const onDragEnd = (info: DropResult) => {
-    const { destination, source, draggableId } = info;
+  const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
     if (destination?.droppableId === source.droppableId) {
       // same board movement
       setToDos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
+        const draggableObj = sourceBoard[source.index];
         sourceBoard.splice(source.index, 1);
-        sourceBoard.splice(destination?.index, 0, draggableId);
+        sourceBoard.splice(destination?.index, 0, draggableObj);
         return { ...allBoards, [source.droppableId]: sourceBoard };
       });
     }
@@ -39,9 +39,10 @@ function App() {
       // cross board movement
       setToDos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
+        const draggableObj = sourceBoard[source.index];
         const destinationBoard = [...allBoards[destination.droppableId]];
         sourceBoard.splice(source.index, 1);
-        destinationBoard.splice(destination.index, 0, draggableId);
+        destinationBoard.splice(destination.index, 0, draggableObj);
         return {
           ...allBoards,
           [source.droppableId]: sourceBoard,
