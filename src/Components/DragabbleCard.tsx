@@ -1,7 +1,6 @@
 import React from "react";
 import { Draggable } from "react-beautiful-dnd";
 import styled from "styled-components";
-import { IToDo } from "../atoms";
 
 const Card = styled.div<{ isDragging: boolean }>`
   border-radius: 5px;

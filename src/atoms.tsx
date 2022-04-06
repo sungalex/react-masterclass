@@ -17,3 +17,12 @@ export const toDoState = atom<IToDoState>({
     Done: [],
   },
 });
+
+export const trashState = atom<IToDoState>({
+  key: "trash",
+  default: {
+    "To Do": [],
+    Doing: [],
+    Done: [],
+  },
+});
