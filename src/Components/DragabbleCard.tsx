@@ -7,7 +7,9 @@ const Card = styled.div<{ isDragging: boolean }>`
   margin: 5px;
   padding: 10px;
   background-color: ${(props) =>
-    props.isDragging ? "tomato" : props.theme.cardColor};
+    props.isDragging ? "#c0dffb" : props.theme.cardColor};
+  box-shadow: ${(props) =>
+    props.isDragging ? "0px 2px 5px rgba(0, 0, 0, 0.1)" : "none"};
 `;
 
 interface IDragabbleCardProps {
