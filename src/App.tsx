@@ -10,9 +10,10 @@ const Wrapper = styled.div`
   width: 100vw;
   margin: 0 auto;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  height: calc(100vh - 50px);
   position: relative;
+  margin-top: 20px;
+  padding: 10px;
 `;
 
 const Boards = styled.div`
@@ -21,6 +22,15 @@ const Boards = styled.div`
   align-items: flex-start;
   width: 100%;
   gap: 10px;
+`;
+
+const Title = styled.h1`
+  font-size: 38px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  color: white;
 `;
 
 function App() {
@@ -73,6 +83,7 @@ function App() {
   console.log("toDos:", toDos);
   return (
     <DragDropContext onDragEnd={onDragEnd}>
+      <Title>Trello Clone</Title>
       <Wrapper>
         <Boards>
           {Object.keys(toDos).map((boardId) => (

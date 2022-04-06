@@ -6,11 +6,13 @@ import { IToDo, toDoState } from "../atoms";
 import DragabbleCard from "./DragabbleCard";
 
 const Wrapper = styled.div`
-  width: 200px;
+  min-width: 150px;
+  width: 100vw;
+  min-height: 300px;
+  max-height: calc(100vh - 170px);
   padding-top: 10px;
   background-color: ${(props) => props.theme.boardColor};
   border-radius: 5px;
-  min-height: 300px;
   display: flex;
   flex-direction: column;
   overflow: hidden;

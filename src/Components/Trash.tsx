@@ -7,19 +7,18 @@ import { trashState } from "../atoms";
 
 const Wrapper = styled.div`
   position: absolute;
+  bottom: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 10px;
-  top: 20px;
-  width: 200px;
+  width: 50px;
   height: 100px;
 `;
 
 const Icon = styled.span`
   position: fixed;
   color: white;
-  font-size: 400%;
+  font-size: 200%;
   padding: 5px;
 `;
 
