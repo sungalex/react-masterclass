@@ -7,9 +7,10 @@ import Board from "./Components/Board";
 import CreateBoard from "./Components/CreateForm";
 import Trash from "./Components/Trash";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ length: number }>`
   display: flex;
   width: 100vw;
+  min-width: calc(${(props) => props.length} * 160px);
   margin: 0 auto;
   justify-content: center;
   height: calc(100vh - 150px);
@@ -38,10 +39,12 @@ const Title = styled.h1`
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const [trash, setTrash] = useRecoilState(trashState);
+  const length = Object.keys(toDos).length;
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
+
+    // delete toDo
     if (destination?.droppableId === "Trash") {
-      // delete toDo
       let trashObj = [] as any;
       setToDos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
@@ -56,8 +59,9 @@ function App() {
       });
       return;
     }
+
+    // same board movement
     if (destination?.droppableId === source.droppableId) {
-      // same board movement
       setToDos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
         const draggableObj = sourceBoard[source.index];
@@ -66,8 +70,9 @@ function App() {
         return { ...allBoards, [source.droppableId]: sourceBoard };
       });
     }
+
+    // cross board movement
     if (destination?.droppableId !== source.droppableId) {
-      // cross board movement
       setToDos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
         const draggableObj = sourceBoard[source.index];
@@ -82,6 +87,8 @@ function App() {
       });
     }
   };
+
+  // get & set local storage
   useEffect(() => {
     const storageToDos = JSON.parse(
       localStorage.getItem("toDoStorage") as string
@@ -108,7 +115,7 @@ function App() {
       <Title>Trello Clone</Title>
       <CreateBoard />
       <Trash />
-      <Wrapper>
+      <Wrapper length={length}>
         <Boards>
           {Object.keys(toDos).map((boardId) => (
             <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />

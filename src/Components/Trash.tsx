@@ -3,11 +3,11 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilValue } from "recoil";
-import { trashState } from "../atoms";
+import { toDoState, trashState } from "../atoms";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ length: number }>`
   position: absolute;
-  right: calc(100vw / 6 - 10px);
+  right: calc(100vw / (${(props) => props.length} * 2) - 10px);
   top: 75px;
   display: flex;
   justify-content: center;
@@ -19,15 +19,20 @@ const Wrapper = styled.div`
 const Icon = styled.span`
   position: fixed;
   color: white;
-  font-size: 200%;
+  font-size: 150%;
   padding: 5px;
 `;
 
 function Trash() {
   const trashBoards = useRecoilValue(trashState);
+  const toDos = useRecoilValue(toDoState);
+  let length = Object.keys(toDos).length;
+  if (length < 3) {
+    length = 3;
+  }
   console.log("Trash Boards:", trashBoards);
   return (
-    <Wrapper>
+    <Wrapper length={length}>
       <Icon>
         <FontAwesomeIcon icon={faTrashCan} size="lg" />
       </Icon>

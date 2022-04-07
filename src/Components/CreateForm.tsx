@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import { useSetRecoilState } from "recoil";
+import { toDoState } from "../atoms";
 
 const Wrapper = styled.div`
   margin-top: 20px;
@@ -21,6 +23,9 @@ const Input = styled.input`
   font-size: 20px;
   border-radius: 30px;
   text-align: center;
+  ::placeholder {
+    color: ${(props) => props.theme.boardColor};
+  }
 `;
 
 interface IForm {
@@ -29,7 +34,13 @@ interface IForm {
 
 function CreateBoard() {
   const { register, setValue, handleSubmit } = useForm<IForm>();
-  const onValid = () => {};
+  const addBoard = useSetRecoilState(toDoState);
+  const onValid = ({ boardId }: IForm) => {
+    addBoard((tasks) => {
+      return { ...tasks, [boardId]: [] };
+    });
+    setValue("boardId", "");
+  };
   return (
     <Wrapper>
       <Form onSubmit={handleSubmit(onValid)}>

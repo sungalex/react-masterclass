@@ -1,12 +1,14 @@
+import React from "react";
 import { Droppable } from "react-beautiful-dnd";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { IToDo, toDoState } from "../atoms";
+// import { theme } from "../theme";
 import DragabbleCard from "./DragabbleCard";
 
 const Wrapper = styled.div`
-  min-width: 200px;
+  min-width: 150px;
   width: 100vw;
   min-height: 300px;
   max-height: calc(100vh - 180px);
@@ -16,6 +18,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
+  position: relative;
 `;
 
 const Title = styled.div`
@@ -24,6 +27,16 @@ const Title = styled.div`
   margin-bottom: 10px;
   font-size: 18px;
 `;
+
+// const Button = styled.button<IButtonProps>`
+//   position: absolute;
+//   right: 10px;
+//   top: 5px;
+//   text-align: center;
+//   width: 30px;
+//   border-style: none;
+//   background-color: ${theme.boardColor};
+// `;
 
 const Form = styled.form`
   width: 100%;
@@ -38,19 +51,26 @@ const Input = styled.input`
   padding: 10px 15px;
   border-radius: 20px;
   text-align: center;
+  ::placeholder {
+    color: #b2bec3;
+  }
 `;
 
 const Area = styled.div<IAreaProps>`
   background-color: ${(props) =>
     props.isDraggingOver
-      ? "#cad7dd"
+      ? "#9fd1e6"
       : props.isDraggingFromThis
-      ? "#b2bec3"
+      ? "#e8caab"
       : "transparent"};
   flex-grow: 1;
   transition: background-color 0.3s ease-in-out;
   padding: 10px 5px;
 `;
+
+// interface IButtonProps {
+//   boardId: string;
+// }
 
 interface IAreaProps {
   isDraggingFromThis: boolean;
@@ -64,6 +84,7 @@ interface IBoardProps {
 
 interface IForm {
   toDo: string;
+  boardId: string;
 }
 
 function Board({ boardId, toDos }: IBoardProps) {
@@ -76,9 +97,16 @@ function Board({ boardId, toDos }: IBoardProps) {
     });
     setValue("toDo", "");
   };
+  // const onDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   console.log(event);
+  // };
+
   return (
     <Wrapper>
       <Title>{boardId}</Title>
+      {/* <Button boardId={boardId} onClick={onDelete}>
+        ☆
+      </Button> */}
       <Form onSubmit={handleSubmit(onValid)}>
         <Input
           {...register("toDo", { required: true })}
