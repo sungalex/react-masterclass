@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  overflow: scroll;
+  overflow: auto;
 `;
 
 const Title = styled.div`
