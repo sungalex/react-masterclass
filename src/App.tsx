@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState, trashState } from "./atoms";
 import Board from "./Components/Board";
+import CreateBoard from "./Components/CreateForm";
 import Trash from "./Components/Trash";
 
 const Wrapper = styled.div`
@@ -11,7 +12,7 @@ const Wrapper = styled.div`
   width: 100vw;
   margin: 0 auto;
   justify-content: center;
-  height: calc(100vh - 50px);
+  height: calc(100vh - 150px);
   position: relative;
   margin-top: 20px;
   padding: 10px;
@@ -105,13 +106,14 @@ function App() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Title>Trello Clone</Title>
+      <CreateBoard />
+      <Trash />
       <Wrapper>
         <Boards>
           {Object.keys(toDos).map((boardId) => (
             <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
           ))}
         </Boards>
-        <Trash />
       </Wrapper>
     </DragDropContext>
   );

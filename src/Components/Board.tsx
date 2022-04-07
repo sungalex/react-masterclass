@@ -6,16 +6,16 @@ import { IToDo, toDoState } from "../atoms";
 import DragabbleCard from "./DragabbleCard";
 
 const Wrapper = styled.div`
-  min-width: 150px;
+  min-width: 200px;
   width: 100vw;
   min-height: 300px;
-  max-height: calc(100vh - 170px);
+  max-height: calc(100vh - 180px);
   padding-top: 10px;
   background-color: ${(props) => props.theme.boardColor};
   border-radius: 5px;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  overflow: scroll;
 `;
 
 const Title = styled.div`
@@ -31,6 +31,13 @@ const Form = styled.form`
     width: 100%;
   }
   padding: 0px 5px;
+`;
+
+const Input = styled.input`
+  border-style: none;
+  padding: 10px 15px;
+  border-radius: 20px;
+  text-align: center;
 `;
 
 const Area = styled.div<IAreaProps>`
@@ -73,8 +80,7 @@ function Board({ boardId, toDos }: IBoardProps) {
     <Wrapper>
       <Title>{boardId}</Title>
       <Form onSubmit={handleSubmit(onValid)}>
-        <input
-          style={{ padding: "5px" }}
+        <Input
           {...register("toDo", { required: true })}
           type="text"
           placeholder={`Add task on ${boardId}`}

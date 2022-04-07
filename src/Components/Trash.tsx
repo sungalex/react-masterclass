@@ -7,12 +7,13 @@ import { trashState } from "../atoms";
 
 const Wrapper = styled.div`
   position: absolute;
-  bottom: 20px;
+  right: calc(100vw / 6 - 10px);
+  top: 75px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 50px;
-  height: 100px;
+  height: 50px;
 `;
 
 const Icon = styled.span`
