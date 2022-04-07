@@ -53,8 +53,8 @@ const Loader = styled.div`
 `;
 
 const Img = styled.img`
-  width: 35px;
-  height: 35px;
+  width: 32px;
+  height: 32px;
   margin-right: 10px;
 `;
 
@@ -86,9 +86,7 @@ function Coins() {
           {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link to={`/${coin.id}`} state={{ coinName: coin.name }}>
-                <Img
-                  src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
-                />
+                <Img src={`/color/${coin.symbol.toLowerCase()}.png`} />
                 {coin.symbol} - {coin.name}
                 <Icon>
                   <FontAwesomeIcon icon={faAngleDoubleRight} fade size="sm" />
