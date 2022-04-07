@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { IToDo, toDoState } from "../atoms";
-// import { theme } from "../theme";
 import DragabbleCard from "./DragabbleCard";
 
 const Wrapper = styled.div`
@@ -27,16 +26,6 @@ const Title = styled.div`
   margin-bottom: 10px;
   font-size: 18px;
 `;
-
-// const Button = styled.button<IButtonProps>`
-//   position: absolute;
-//   right: 10px;
-//   top: 5px;
-//   text-align: center;
-//   width: 30px;
-//   border-style: none;
-//   background-color: ${theme.boardColor};
-// `;
 
 const Form = styled.form`
   width: 100%;
@@ -68,10 +57,6 @@ const Area = styled.div<IAreaProps>`
   padding: 10px 5px;
 `;
 
-// interface IButtonProps {
-//   boardId: string;
-// }
-
 interface IAreaProps {
   isDraggingFromThis: boolean;
   isDraggingOver: boolean;
@@ -84,7 +69,6 @@ interface IBoardProps {
 
 interface IForm {
   toDo: string;
-  boardId: string;
 }
 
 function Board({ boardId, toDos }: IBoardProps) {
@@ -97,16 +81,10 @@ function Board({ boardId, toDos }: IBoardProps) {
     });
     setValue("toDo", "");
   };
-  // const onDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
-  //   console.log(event);
-  // };
 
   return (
     <Wrapper>
       <Title>{boardId}</Title>
-      {/* <Button boardId={boardId} onClick={onDelete}>
-        ☆
-      </Button> */}
       <Form onSubmit={handleSubmit(onValid)}>
         <Input
           {...register("toDo", { required: true })}
