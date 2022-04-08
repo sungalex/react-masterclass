@@ -53,8 +53,8 @@ const Loader = styled.div`
 `;
 
 const Img = styled.img`
-  width: 32px;
-  height: 32px;
+  width: 35px;
+  height: 35px;
   margin-right: 10px;
 `;
 
@@ -86,7 +86,10 @@ function Coins() {
           {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link to={`${coin.id}`} state={{ coinName: coin.name }}>
-                <Img src={`color/${coin.symbol.toLowerCase()}.png`} />
+                {/* <Img src={`./color/${coin.symbol.toLowerCase()}.png`} /> */}
+                <Img
+                  src={`https://images.coinviewer.io/currencies/64x64/${coin.symbol.toLowerCase()}.png`}
+                />
                 {coin.symbol} - {coin.name}
                 <Icon>
                   <FontAwesomeIcon icon={faAngleDoubleRight} fade size="sm" />
