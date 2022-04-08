@@ -88,7 +88,7 @@ function Coins() {
               <Link to={`${coin.id}`} state={{ coinName: coin.name }}>
                 {/* <Img src={`./color/${coin.symbol.toLowerCase()}.png`} /> */}
                 <Img
-                  src={`https://images.coinviewer.io/currencies/64x64/${coin.symbol.toLowerCase()}.png`}
+                  src={`https://cryptoicons.org/api/icon/${coin.symbol.toLowerCase()}/64`}
                 />
                 {coin.symbol} - {coin.name}
                 <Icon>
