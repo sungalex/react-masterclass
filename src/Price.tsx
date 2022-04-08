@@ -3,9 +3,8 @@ import styled from "styled-components";
 import { fetchCoinHistory } from "./api";
 
 const Container = styled.div`
-  max-width: 440px;
-  height: 200px;
-  overflow: scroll;
+  height: 270px;
+  overflow: auto;
 `;
 
 const Table = styled.table`

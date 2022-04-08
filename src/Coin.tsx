@@ -1,14 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons";
 import { useParams, useLocation } from "react-router";
-import { Link, useMatch, Routes, Route } from "react-router-dom";
+import { Link, useMatch, Routes, Route, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "./api";
-import Chart from "./Chart";
-import Price from "./Price";
 import { Helmet } from "react-helmet-async"; // using "react-helmet-async" rather than "react-helmet"
 import CandleChart from "./CandleChart";
+import AreaChart from "./AreaChart";
+import Price from "./Price";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -66,6 +66,8 @@ const OverviewItem = styled.div`
 const Description = styled.div`
   margin: 20px 10px;
   font-weight: 300;
+  max-height: 100px;
+  overflow: auto;
 `;
 
 const Tabs = styled.div`
@@ -168,9 +170,9 @@ interface Quotes {
 function Coin() {
   const { coinId } = useParams();
   const { state } = useLocation() as ILocation;
-  const chartMatch = useMatch("/:coinId/chart");
-  const priceMatch = useMatch("/:coinId/price");
-  const candleMatch = useMatch("/:coinId/candle-chart");
+  const chartMatch = useMatch("/react-masterclass/:coinId/chart");
+  const priceMatch = useMatch("/react-masterclass/:coinId/price");
+  const areaMatch = useMatch("/react-masterclass/:coinId/area-chart");
 
   const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
     [coinId, "info"],
@@ -261,13 +263,13 @@ function Coin() {
           </Overview>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Area Chart</Link>
+              <Link to={`chart`}>Candle Chart</Link>
             </Tab>
-            <Tab isActive={candleMatch !== null}>
-              <Link to={`/${coinId}/candle-chart`}>Candle Chart</Link>
+            <Tab isActive={areaMatch !== null}>
+              <Link to={`area-chart`}>Area Chart</Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
+              <Link to={`price`}>Price</Link>
             </Tab>
           </Tabs>
           {/* Nested Router:
@@ -275,11 +277,8 @@ function Coin() {
             */
           /* <Outlet /> */}
           <Routes>
-            <Route path="chart" element={<Chart coinId={coinId!} />} />
-            <Route
-              path="candle-chart"
-              element={<CandleChart coinId={coinId!} />}
-            />
+            <Route path="chart" element={<CandleChart coinId={coinId!} />} />
+            <Route path="area-chart" element={<AreaChart coinId={coinId!} />} />
             <Route path="price" element={<Price coinId={coinId!} />} />
           </Routes>
         </>

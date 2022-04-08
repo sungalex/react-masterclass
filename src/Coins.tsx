@@ -85,8 +85,8 @@ function Coins() {
         <CoinList>
           {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`} state={{ coinName: coin.name }}>
-                <Img src={`/color/${coin.symbol.toLowerCase()}.png`} />
+              <Link to={`${coin.id}`} state={{ coinName: coin.name }}>
+                <Img src={`color/${coin.symbol.toLowerCase()}.png`} />
                 {coin.symbol} - {coin.name}
                 <Icon>
                   <FontAwesomeIcon icon={faAngleDoubleRight} fade size="sm" />

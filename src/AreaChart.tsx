@@ -17,7 +17,7 @@ interface IHistorical {
   volume: number;
 }
 
-function Chart({ coinId }: ChartProps) {
+function AreaChart({ coinId }: ChartProps) {
   const { isLoading, data } = useQuery<IHistorical[]>(
     [coinId, "historical"],
     () => fetchCoinHistory(coinId, 4),
@@ -131,4 +131,4 @@ function Chart({ coinId }: ChartProps) {
   );
 }
 
-export default Chart;
+export default AreaChart;

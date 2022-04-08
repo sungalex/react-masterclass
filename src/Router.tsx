@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Coins from "./Coins";
 import Coin from "./Coin";
 
@@ -7,8 +7,12 @@ function CryptoRouter() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Coins />} />
-          <Route path="/:coinId/*" element={<Coin />}></Route>
+          <Route
+            path="/"
+            element={<Navigate replace to="/react-masterclass" />}
+          />
+          <Route path="/react-masterclass" element={<Coins />}></Route>
+          <Route path="/react-masterclass/:coinId/*" element={<Coin />} />
         </Routes>
       </BrowserRouter>
     </>
