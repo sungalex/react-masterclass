@@ -1,7 +1,8 @@
 import React from "react";
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, ThemeProvider } from "styled-components";
 import CryptoRouter from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { darkTheme, lightTheme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
 //styled-reset
@@ -72,9 +73,11 @@ a {
 function App() {
   return (
     <>
-      <GlobalStyle />
-      <CryptoRouter />
-      <ReactQueryDevtools initialIsOpen={true} />
+      <ThemeProvider theme={darkTheme}>
+        <GlobalStyle />
+        <CryptoRouter />
+        <ReactQueryDevtools initialIsOpen={true} />
+      </ThemeProvider>
     </>
   );
 }
