@@ -3,6 +3,8 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import CryptoRouter from "./Router";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { darkTheme, lightTheme } from "./theme";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "./atom";
 
 const GlobalStyle = createGlobalStyle`
 //styled-reset
@@ -71,9 +73,10 @@ a {
 `;
 
 function App() {
+  const isDark = useRecoilValue(isDarkAtom);
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
         <CryptoRouter />
         <ReactQueryDevtools initialIsOpen={true} />

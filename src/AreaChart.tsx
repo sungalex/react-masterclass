@@ -1,6 +1,8 @@
 import ApexCharts from "react-apexcharts";
 import { useQuery } from "react-query";
+import { useRecoilValue } from "recoil";
 import { fetchCoinHistory } from "./api";
+import { isDarkAtom } from "./atom";
 
 interface ChartProps {
   coinId: string;
@@ -18,6 +20,7 @@ interface IHistorical {
 }
 
 function AreaChart({ coinId }: ChartProps) {
+  const isDark = useRecoilValue(isDarkAtom);
   const { isLoading, data } = useQuery<IHistorical[]>(
     [coinId, "historical"],
     () => fetchCoinHistory(coinId, 4),
@@ -108,7 +111,7 @@ function AreaChart({ coinId }: ChartProps) {
             },
             tooltip: {
               enabled: true,
-              theme: "dark",
+              theme: isDark ? "dark" : "light",
               shared: false,
               x: { show: false, format: "yyyy-MM-dd" },
               y: {
