@@ -5,6 +5,7 @@ import { fetchCoins } from "./api";
 import { Helmet } from "react-helmet-async"; // using "react-helmet-async" rather than "react-helmet"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -70,6 +71,8 @@ interface ICoin {
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
+  const [isDark, setIsDark] = useState(false);
+  const toggleDark = () => setIsDark((current) => !current);
   return (
     <Container>
       {/* changing <head> tag */}
@@ -78,6 +81,7 @@ function Coins() {
       </Helmet>
       <Header>
         <Title>코인</Title>
+        <button onClick={toggleDark}>Toggle Mode</button>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>
