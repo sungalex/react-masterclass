@@ -9,6 +9,8 @@ import { Helmet } from "react-helmet-async"; // using "react-helmet-async" rathe
 import CandleChart from "./CandleChart";
 import AreaChart from "./AreaChart";
 import Price from "./Price";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "./atom";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -34,7 +36,12 @@ const HomeBtn = styled.div`
 
 const Title = styled.h1`
   font-size: 24px;
-  color: ${(props) => props.theme.accentColor};
+  font-weight: 600;
+  color: ${(props) => props.theme.textColor};
+  cursor: pointer;
+  :hover {
+    color: ${(props) => props.theme.accentColor};
+  }
 `;
 
 const Loader = styled.div`
@@ -44,7 +51,7 @@ const Loader = styled.div`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.cardBgColor};
   padding: 15px;
   border-radius: 10px;
 `;
@@ -65,9 +72,8 @@ const OverviewItem = styled.div`
 
 const Description = styled.div`
   margin: 20px 10px;
-  font-weight: 300;
-  max-height: 100px;
-  overflow: auto;
+  max-height: 110px;
+  overflow: scroll;
 `;
 
 const Tabs = styled.div`
@@ -81,7 +87,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
   text-transform: uppercase;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.cardBgColor};
   border-radius: 10px;
   padding: 7px;
   color: ${(props) =>
@@ -173,6 +179,8 @@ function Coin() {
   const chartMatch = useMatch("/react-masterclass/:coinId/chart");
   const priceMatch = useMatch("/react-masterclass/:coinId/price");
   const areaMatch = useMatch("/react-masterclass/:coinId/area-chart");
+  const setIsDark = useSetRecoilState(isDarkAtom);
+  const toggleDark = () => setIsDark((currentMode) => !currentMode);
 
   const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
     [coinId, "info"],
@@ -201,10 +209,8 @@ function Coin() {
             <FontAwesomeIcon icon={faAngleDoubleLeft} size="lg" />
           </Link>
         </HomeBtn>
-        <Title>
-          <Link to={`/${coinId}`}>
-            {state?.coinName || (loading ? "Loading..." : infoData?.name)}
-          </Link>
+        <Title onClick={toggleDark}>
+          {state?.coinName || (loading ? "Loading..." : infoData?.name)}
         </Title>
       </Header>
       {loading ? (

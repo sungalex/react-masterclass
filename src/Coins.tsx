@@ -5,7 +5,7 @@ import { fetchCoins } from "./api";
 import { Helmet } from "react-helmet-async"; // using "react-helmet-async" rather than "react-helmet"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { isDarkAtom } from "./atom";
 
 const Container = styled.div`
@@ -21,12 +21,15 @@ const Header = styled.header`
   align-items: center;
 `;
 
-const CoinList = styled.ul``;
+const CoinList = styled.ul`
+  font-size: 20px;
+  font-weight: 400;
+`;
 
 const Coin = styled.li`
-  background-color: white;
-  color: ${(props) => props.theme.coinsColor};
-  border-radius: 15px;
+  background-color: ${(props) => props.theme.cardBgColor};
+  color: ${(props) => props.theme.textColor};
+  border-radius: 20px;
   margin-top: 10px;
   a {
     display: flex;
@@ -46,8 +49,13 @@ const Icon = styled.span`
 `;
 
 const Title = styled.h1`
-  font-size: 48px;
-  color: ${(props) => props.theme.accentColor};
+  font-size: 40px;
+  font-weight: 600;
+  color: ${(props) => props.theme.textColor};
+  cursor: pointer;
+  :hover {
+    color: ${(props) => props.theme.accentColor};
+  }
 `;
 
 const Loader = styled.div`
@@ -57,6 +65,7 @@ const Loader = styled.div`
 const Img = styled.img`
   width: 35px;
   height: 35px;
+  margin-left: 20px;
   margin-right: 10px;
 `;
 
@@ -72,7 +81,7 @@ interface ICoin {
 
 function Coins() {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
-  const [isDark, setIsDark] = useRecoilState(isDarkAtom);
+  const setIsDark = useSetRecoilState(isDarkAtom);
   const toggleDark = () => setIsDark((currentMode) => !currentMode);
   return (
     <Container>
@@ -81,10 +90,7 @@ function Coins() {
         <title>Crypto Tracker</title>
       </Helmet>
       <Header>
-        <Title>코인</Title>
-        <button onClick={toggleDark}>
-          {isDark ? "Change to White Mode" : "Change to Dark Mode"}
-        </button>
+        <Title onClick={toggleDark}>Crypto Tracker</Title>
       </Header>
       {isLoading ? (
         <Loader>Loading...</Loader>

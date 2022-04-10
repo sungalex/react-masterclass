@@ -1,22 +1,24 @@
 import { useQuery } from "react-query";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { fetchCoinHistory } from "./api";
+import { isDarkAtom } from "./atom";
 
 const Container = styled.div`
   height: 270px;
   overflow: auto;
 `;
 
-const Table = styled.table`
+const Table = styled.table<ITable>`
   padding: 20px 0px;
   width: 440px;
   border-collapse: collapse;
-  border: 2px solid rgba(255, 255, 255, 0.5);
+  border: 2px solid ${(props) => props.theme.borderColor};
   letter-spacing: 1px;
 
   thead {
-    background-color: rgba(0, 0, 0, 0.3);
-    color: white;
+    background-color: ${(props) => props.theme.cardBgColor};
+    color: ${(props) => props.theme.textColor};
     font-weight: 400;
   }
 
@@ -32,12 +34,16 @@ const Table = styled.table`
 
   td,
   th {
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid ${(props) => props.theme.borderColor};
     padding: 5px;
     text-align: center;
     font-size: 13px;
   }
 `;
+
+interface ITable {
+  isDark: boolean;
+}
 
 interface PriceProps {
   coinId: string;
@@ -55,6 +61,7 @@ interface IHistorical {
 }
 
 function Price({ coinId }: PriceProps) {
+  const isDark = useRecoilValue(isDarkAtom);
   const { isLoading, data } = useQuery<IHistorical[]>(
     [coinId, "historical"],
     () => fetchCoinHistory(coinId, 4),
@@ -69,7 +76,7 @@ function Price({ coinId }: PriceProps) {
         "Loading..."
       ) : (
         <Container>
-          <Table>
+          <Table isDark={isDark}>
             <thead>
               <tr>
                 <th>Date</th>
