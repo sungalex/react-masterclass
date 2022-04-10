@@ -64,6 +64,10 @@ function CandleChart({ coinId }: ICandleChart) {
             },
             xaxis: {
               type: "datetime",
+              labels: {
+                format: "'yy-MM-dd",
+                rotate: -45,
+              },
               title: {
                 text: "Date",
               },
@@ -77,7 +81,7 @@ function CandleChart({ coinId }: ICandleChart) {
                   return new Intl.NumberFormat("en-IN", {
                     style: "currency",
                     currency: "USD",
-                    maximumFractionDigits: value > 10 ? 0 : value > 1 ? 1 : 2,
+                    maximumFractionDigits: value > 10 ? 0 : value > 1 ? 2 : 3,
                   }).format(value);
                 },
               },
