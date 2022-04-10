@@ -64,6 +64,9 @@ function CandleChart({ coinId }: ICandleChart) {
             },
             xaxis: {
               type: "datetime",
+              title: {
+                text: "Date",
+              },
             },
             yaxis: {
               tooltip: {
@@ -77,6 +80,9 @@ function CandleChart({ coinId }: ICandleChart) {
                     maximumFractionDigits: value > 10 ? 0 : value > 1 ? 1 : 2,
                   }).format(value);
                 },
+              },
+              title: {
+                text: "Price",
               },
             },
             grid: {
