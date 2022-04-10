@@ -94,28 +94,32 @@ function Price({ coinId }: PriceProps) {
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                      maximumFractionDigits: 1,
+                      maximumFractionDigits:
+                        price.open > 10 ? 0 : price.open > 1 ? 2 : 3,
                     }).format(price.open)}
                   </td>
                   <td>
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                      maximumFractionDigits: 1,
+                      maximumFractionDigits:
+                        price.high > 10 ? 0 : price.high > 1 ? 2 : 3,
                     }).format(price.high)}
                   </td>
                   <td>
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                      maximumFractionDigits: 1,
+                      maximumFractionDigits:
+                        price.low > 10 ? 0 : price.low > 1 ? 2 : 3,
                     }).format(price.low)}
                   </td>
                   <td>
                     {new Intl.NumberFormat("en-IN", {
                       style: "currency",
                       currency: "USD",
-                      maximumFractionDigits: 1,
+                      maximumFractionDigits:
+                        price.close > 10 ? 0 : price.close > 1 ? 2 : 3,
                     }).format(price.close)}
                   </td>
                 </tr>
