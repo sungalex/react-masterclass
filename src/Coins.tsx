@@ -99,11 +99,11 @@ function Coins() {
           {data?.slice(0, 100).map((coin) => (
             <Coin key={coin.id}>
               <Link to={`${coin.id}`} state={{ coinName: coin.name }}>
-                {/* <Img src={`color/${coin.symbol.toLowerCase()}.png`} /> */}
-                <Img
+                <Img src={`/color/${coin.symbol.toLowerCase()}.png`} />
+                {/* <Img
                   src={`https://cryptoicons.org/api/icon/${coin.symbol.toLowerCase()}/200`}
                   // crossOrigin="anonymous"
-                />
+                /> */}
                 {coin.symbol} - {coin.name}
                 <Icon>
                   <FontAwesomeIcon icon={faAngleDoubleRight} fade size="sm" />
