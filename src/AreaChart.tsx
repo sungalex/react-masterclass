@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import { useRecoilValue } from "recoil";
 import { fetchCoinHistory } from "./api";
 import { isDarkAtom } from "./atom";
+import { lightTheme, darkTheme } from "./theme";
 
 interface ChartProps {
   coinId: string;
@@ -67,7 +68,7 @@ function AreaChart({ coinId }: ChartProps) {
               toolbar: {
                 autoSelected: "zoom",
               },
-              foreColor: "#f5f6fa",
+              foreColor: isDark ? "white" : "black",
               background: "transparent",
             },
             markers: {
@@ -94,7 +95,7 @@ function AreaChart({ coinId }: ChartProps) {
                   return new Intl.NumberFormat("en-IN", {
                     style: "currency",
                     currency: "USD",
-                    maximumFractionDigits: 0,
+                    maximumFractionDigits: value > 10 ? 0 : value > 1 ? 1 : 2,
                   }).format(value);
                 },
               },
@@ -103,9 +104,11 @@ function AreaChart({ coinId }: ChartProps) {
               },
             },
             grid: {
-              borderColor: "#576574",
+              borderColor: isDark
+                ? darkTheme.borderColor
+                : lightTheme.borderColor,
               row: {
-                colors: ["#535c68", "transparent"], // takes an array which will be repeated on columns
+                colors: [], // takes an array which will be repeated on columns
                 opacity: 0.5,
               },
             },
@@ -122,7 +125,7 @@ function AreaChart({ coinId }: ChartProps) {
                   return new Intl.NumberFormat("en-IN", {
                     style: "currency",
                     currency: "USD",
-                    maximumFractionDigits: 2,
+                    maximumFractionDigits: value > 10 ? 0 : value > 1 ? 1 : 2,
                   }).format(value);
                 },
               },
