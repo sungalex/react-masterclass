@@ -40,7 +40,12 @@ function CandleChart({ coinId }: ICandleChart) {
               data: data!.map((price) => {
                 return {
                   x: price.time_close,
-                  y: [price.open, price.high, price.low, price.close],
+                  y: [
+                    price.open.toFixed(3),
+                    price.high.toFixed(3),
+                    price.low.toFixed(3),
+                    price.close.toFixed(3),
+                  ],
                 };
               }),
             },
@@ -69,13 +74,13 @@ function CandleChart({ coinId }: ICandleChart) {
                   return new Intl.NumberFormat("en-IN", {
                     style: "currency",
                     currency: "USD",
-                    maximumFractionDigits: 0,
+                    maximumFractionDigits: value > 10 ? 0 : value > 1 ? 1 : 2,
                   }).format(value);
                 },
               },
             },
             grid: {
-              borderColor: "#576574",
+              borderColor: isDark ? "#576574" : "#c4c9cf",
             },
           }}
         />
