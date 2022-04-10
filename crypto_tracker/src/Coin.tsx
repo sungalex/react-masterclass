@@ -5,10 +5,12 @@ import { Link, useMatch, Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "react-query";
 import { fetchCoinInfo, fetchCoinTickers } from "./api";
-import Chart from "./Chart";
-import Price from "./Price";
 import { Helmet } from "react-helmet-async"; // using "react-helmet-async" rather than "react-helmet"
 import CandleChart from "./CandleChart";
+import AreaChart from "./AreaChart";
+import Price from "./Price";
+import { useSetRecoilState } from "recoil";
+import { isDarkAtom } from "./atom";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -34,7 +36,12 @@ const HomeBtn = styled.div`
 
 const Title = styled.h1`
   font-size: 24px;
-  color: ${(props) => props.theme.accentColor};
+  font-weight: 600;
+  color: ${(props) => props.theme.textColor};
+  cursor: pointer;
+  :hover {
+    color: ${(props) => props.theme.accentColor};
+  }
 `;
 
 const Loader = styled.div`
@@ -44,7 +51,7 @@ const Loader = styled.div`
 const Overview = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.cardBgColor};
   padding: 15px;
   border-radius: 10px;
 `;
@@ -65,7 +72,8 @@ const OverviewItem = styled.div`
 
 const Description = styled.div`
   margin: 20px 10px;
-  font-weight: 300;
+  max-height: 110px;
+  overflow: scroll;
 `;
 
 const Tabs = styled.div`
@@ -79,7 +87,7 @@ const Tab = styled.span<{ isActive: boolean }>`
   text-align: center;
   text-transform: uppercase;
   font-weight: 400;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: ${(props) => props.theme.cardBgColor};
   border-radius: 10px;
   padding: 7px;
   color: ${(props) =>
@@ -168,9 +176,11 @@ interface Quotes {
 function Coin() {
   const { coinId } = useParams();
   const { state } = useLocation() as ILocation;
-  const chartMatch = useMatch("/:coinId/chart");
-  const priceMatch = useMatch("/:coinId/price");
-  const candleMatch = useMatch("/:coinId/candle-chart");
+  const chartMatch = useMatch("/react-masterclass/:coinId/chart");
+  const priceMatch = useMatch("/react-masterclass/:coinId/price");
+  const areaMatch = useMatch("/react-masterclass/:coinId/area-chart");
+  const setIsDark = useSetRecoilState(isDarkAtom);
+  const toggleDark = () => setIsDark((currentMode) => !currentMode);
 
   const { isLoading: infoLoading, data: infoData } = useQuery<IInfoData>(
     [coinId, "info"],
@@ -199,10 +209,8 @@ function Coin() {
             <FontAwesomeIcon icon={faAngleDoubleLeft} size="lg" />
           </Link>
         </HomeBtn>
-        <Title>
-          <Link to={`/${coinId}`}>
-            {state?.coinName || (loading ? "Loading..." : infoData?.name)}
-          </Link>
+        <Title onClick={toggleDark}>
+          {state?.coinName || (loading ? "Loading..." : infoData?.name)}
         </Title>
       </Header>
       {loading ? (
@@ -261,13 +269,13 @@ function Coin() {
           </Overview>
           <Tabs>
             <Tab isActive={chartMatch !== null}>
-              <Link to={`/${coinId}/chart`}>Area Chart</Link>
+              <Link to={`chart`}>Candle Chart</Link>
             </Tab>
-            <Tab isActive={candleMatch !== null}>
-              <Link to={`/${coinId}/candle-chart`}>Candle Chart</Link>
+            <Tab isActive={areaMatch !== null}>
+              <Link to={`area-chart`}>Area Chart</Link>
             </Tab>
             <Tab isActive={priceMatch !== null}>
-              <Link to={`/${coinId}/price`}>Price</Link>
+              <Link to={`price`}>Price</Link>
             </Tab>
           </Tabs>
           {/* Nested Router:
@@ -275,11 +283,8 @@ function Coin() {
             */
           /* <Outlet /> */}
           <Routes>
-            <Route path="chart" element={<Chart coinId={coinId!} />} />
-            <Route
-              path="candle-chart"
-              element={<CandleChart coinId={coinId!} />}
-            />
+            <Route path="chart" element={<CandleChart coinId={coinId!} />} />
+            <Route path="area-chart" element={<AreaChart coinId={coinId!} />} />
             <Route path="price" element={<Price coinId={coinId!} />} />
           </Routes>
         </>

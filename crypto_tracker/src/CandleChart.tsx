@@ -1,6 +1,8 @@
 import ApexCharts from "react-apexcharts";
 import { useQuery } from "react-query";
+import { useRecoilValue } from "recoil";
 import { fetchCoinHistory } from "./api";
+import { isDarkAtom } from "./atom";
 
 interface ICandleChart {
   coinId: string;
@@ -18,6 +20,7 @@ interface IHistorical {
 }
 
 function CandleChart({ coinId }: ICandleChart) {
+  const isDark = useRecoilValue(isDarkAtom);
   const { isLoading, data } = useQuery<IHistorical[]>(
     [coinId, "historical"],
     () => fetchCoinHistory(coinId, 8),
@@ -37,7 +40,12 @@ function CandleChart({ coinId }: ICandleChart) {
               data: data!.map((price) => {
                 return {
                   x: price.time_close,
-                  y: [price.open, price.high, price.low, price.close],
+                  y: [
+                    price.open.toFixed(3),
+                    price.high.toFixed(3),
+                    price.low.toFixed(3),
+                    price.close.toFixed(3),
+                  ],
                 };
               }),
             },
@@ -45,7 +53,7 @@ function CandleChart({ coinId }: ICandleChart) {
           type="candlestick"
           options={{
             theme: {
-              mode: "dark",
+              mode: isDark ? "dark" : "light",
             },
             chart: {
               background: "transparent",
@@ -56,6 +64,13 @@ function CandleChart({ coinId }: ICandleChart) {
             },
             xaxis: {
               type: "datetime",
+              labels: {
+                format: "'yy-MM-dd",
+                rotate: -45,
+              },
+              title: {
+                text: "Date",
+              },
             },
             yaxis: {
               tooltip: {
@@ -66,13 +81,16 @@ function CandleChart({ coinId }: ICandleChart) {
                   return new Intl.NumberFormat("en-IN", {
                     style: "currency",
                     currency: "USD",
-                    maximumFractionDigits: 0,
+                    maximumFractionDigits: value > 10 ? 0 : value > 1 ? 2 : 3,
                   }).format(value);
                 },
               },
+              title: {
+                text: "Price",
+              },
             },
             grid: {
-              borderColor: "#576574",
+              borderColor: isDark ? "#576574" : "#c4c9cf",
             },
           }}
         />
