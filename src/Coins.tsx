@@ -103,6 +103,9 @@ function Coins() {
                   src={`${
                     process.env.PUBLIC_URL
                   }/icon/${coin.symbol.toLowerCase()}.png`}
+                  onError={(e) => {
+                    e.currentTarget.src = `${process.env.PUBLIC_URL}/nft.png`;
+                  }}
                 />
                 {/* <Img
                   src={`https://cryptoicons.org/api/icon/${coin.symbol.toLowerCase()}/200`}
