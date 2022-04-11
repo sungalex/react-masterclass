@@ -7,10 +7,10 @@ import Board from "./Components/Board";
 import CreateForm from "./Components/CreateForm";
 import Trash from "./Components/Trash";
 
-const Wrapper = styled.div<{ length: number }>`
+const Wrapper = styled.div`
   display: flex;
   width: 100vw;
-  min-width: calc(${(props) => props.length} * 160px);
+  min-width: 380px;
   margin: 0 auto;
   justify-content: center;
   height: calc(100vh - 210px);
@@ -39,7 +39,6 @@ const Title = styled.h1`
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const [trash, setTrash] = useRecoilState(trashState);
-  const length = Object.keys(toDos).length;
 
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
@@ -121,8 +120,9 @@ function App() {
     <DragDropContext onDragEnd={onDragEnd}>
       <Title>Trello Clone</Title>
       <CreateForm />
-      <Wrapper length={length}>
+      <Wrapper>
         <Boards>
+          {/* TODO: Bug-fix --> error when first time loaded */}
           {Object.keys(toDos).map((boardId) => (
             <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
           ))}
