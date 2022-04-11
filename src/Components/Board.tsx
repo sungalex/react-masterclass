@@ -69,7 +69,6 @@ interface IBoardProps {
 
 interface IForm {
   toDo: string;
-  boardId: string;
 }
 
 function Board({ boardId, toDos }: IBoardProps) {
