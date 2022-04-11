@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import { useRecoilState } from "recoil";
 import styled from "styled-components";
@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   justify-content: center;
   height: calc(100vh - 210px);
   position: relative;
-  margin-top: 20px;
+  margin-top: 15px;
   padding: 10px;
 `;
 
@@ -36,9 +36,14 @@ const Title = styled.h1`
   color: white;
 `;
 
+const Area = styled.div<{ displayStr: string }>`
+  display: ${(props) => props.displayStr};
+`;
+
 function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const [trash, setTrash] = useRecoilState(trashState);
+  const [displayStr, setDisplayStr] = useState("");
 
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
@@ -90,6 +95,14 @@ function App() {
     }
   };
 
+  const handleResize = () => {
+    if (window.innerHeight > 500) {
+      setDisplayStr("block");
+    } else {
+      setDisplayStr("none");
+    }
+  };
+
   // get local storage
   useEffect(() => {
     const storageToDos = JSON.parse(
@@ -98,14 +111,22 @@ function App() {
     const storageTrashs = JSON.parse(
       localStorage.getItem("trashStorage") as string
     );
-    setToDos(storageToDos);
-    setTrash(storageTrashs);
+    if (storageToDos !== null) {
+      setToDos(storageToDos);
+    }
+    if (storageTrashs !== null) {
+      setTrash(storageTrashs);
+    }
   }, [setToDos, setTrash]);
 
   // set local storage
   useEffect(() => {
-    localStorage.setItem("toDoStorage", JSON.stringify(toDos));
-    localStorage.setItem("trashStorage", JSON.stringify(trash));
+    if (toDos !== null) {
+      localStorage.setItem("toDoStorage", JSON.stringify(toDos));
+    }
+    if (trash !== null) {
+      localStorage.setItem("trashStorage", JSON.stringify(trash));
+    }
     console.log(
       "local storage(toDos):",
       JSON.parse(localStorage.getItem("toDoStorage") as string)
@@ -116,6 +137,13 @@ function App() {
     );
   }, [toDos, trash]);
 
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Title>Trello Clone</Title>
@@ -123,12 +151,16 @@ function App() {
       <Wrapper>
         <Boards>
           {/* TODO: Bug-fix --> error when first time loaded */}
-          {Object.keys(toDos).map((boardId) => (
-            <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
-          ))}
+          {toDos !== null && typeof toDos !== "undefined"
+            ? Object.keys(toDos).map((boardId) => (
+                <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
+              ))
+            : null}
         </Boards>
       </Wrapper>
-      <Trash />
+      <Area displayStr={displayStr}>
+        <Trash />
+      </Area>
     </DragDropContext>
   );
 }

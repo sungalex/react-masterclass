@@ -12,8 +12,8 @@ const Wrapper = styled.div<{ length: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 `;
 
 const Icon = styled.span`
