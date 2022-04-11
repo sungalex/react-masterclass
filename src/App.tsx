@@ -46,7 +46,8 @@ function App() {
 
     // delete toDo
     if (destination?.droppableId === "Trash") {
-      let trashObj = [] as any;
+      let trashObj = {} as any;
+
       setToDos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
         trashObj = sourceBoard[source.index];
@@ -54,10 +55,8 @@ function App() {
         return { ...allBoards, [source.droppableId]: sourceBoard };
       });
 
-      // TODO: Error fix
       setTrash((trashBoards) => {
-        let sourceTrash = [] as any;
-        sourceTrash = [...trashBoards[source.droppableId]];
+        const sourceTrash = [...trashBoards[source.droppableId]];
         sourceTrash.splice(0, 0, trashObj);
         return { ...trashBoards, [source.droppableId]: sourceTrash };
       });
@@ -117,9 +116,6 @@ function App() {
       JSON.parse(localStorage.getItem("trashStorage") as string)
     );
   }, [toDos, trash]);
-
-  console.log("toDos:", toDos);
-  console.log("trash:", trash);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
