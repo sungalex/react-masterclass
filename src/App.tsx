@@ -150,7 +150,6 @@ function App() {
       <CreateForm />
       <Wrapper>
         <Boards>
-          {/* TODO: Bug-fix --> error when first time loaded */}
           {toDos !== null && typeof toDos !== "undefined"
             ? Object.keys(toDos).map((boardId) => (
                 <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
