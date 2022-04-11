@@ -4,7 +4,7 @@ import { useRecoilState } from "recoil";
 import styled from "styled-components";
 import { toDoState, trashState } from "./atoms";
 import Board from "./Components/Board";
-import CreateBoard from "./Components/CreateForm";
+import CreateForm from "./Components/CreateForm";
 import Trash from "./Components/Trash";
 
 const Wrapper = styled.div<{ length: number }>`
@@ -13,7 +13,7 @@ const Wrapper = styled.div<{ length: number }>`
   min-width: calc(${(props) => props.length} * 160px);
   margin: 0 auto;
   justify-content: center;
-  height: calc(100vh - 150px);
+  height: calc(100vh - 210px);
   position: relative;
   margin-top: 20px;
   padding: 10px;
@@ -40,6 +40,7 @@ function App() {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const [trash, setTrash] = useRecoilState(trashState);
   const length = Object.keys(toDos).length;
+
   const onDragEnd = ({ destination, source }: DropResult) => {
     if (!destination) return;
 
@@ -52,8 +53,11 @@ function App() {
         sourceBoard.splice(source.index, 1);
         return { ...allBoards, [source.droppableId]: sourceBoard };
       });
+
+      // TODO: Error fix
       setTrash((trashBoards) => {
-        let sourceTrash = [...trashBoards[source.droppableId]];
+        let sourceTrash = [] as any;
+        sourceTrash = [...trashBoards[source.droppableId]];
         sourceTrash.splice(0, 0, trashObj);
         return { ...trashBoards, [source.droppableId]: sourceTrash };
       });
@@ -88,7 +92,7 @@ function App() {
     }
   };
 
-  // get & set local storage
+  // get local storage
   useEffect(() => {
     const storageToDos = JSON.parse(
       localStorage.getItem("toDoStorage") as string
@@ -99,22 +103,28 @@ function App() {
     setToDos(storageToDos);
     setTrash(storageTrashs);
   }, [setToDos, setTrash]);
+
+  // set local storage
   useEffect(() => {
     localStorage.setItem("toDoStorage", JSON.stringify(toDos));
     localStorage.setItem("trashStorage", JSON.stringify(trash));
     console.log(
-      "local storage:",
+      "local storage(toDos):",
       JSON.parse(localStorage.getItem("toDoStorage") as string)
+    );
+    console.log(
+      "local storage(trash):",
+      JSON.parse(localStorage.getItem("trashStorage") as string)
     );
   }, [toDos, trash]);
 
   console.log("toDos:", toDos);
+  console.log("trash:", trash);
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Title>Trello Clone</Title>
-      <CreateBoard />
-      <Trash />
+      <CreateForm />
       <Wrapper length={length}>
         <Boards>
           {Object.keys(toDos).map((boardId) => (
@@ -122,6 +132,7 @@ function App() {
           ))}
         </Boards>
       </Wrapper>
+      <Trash />
     </DragDropContext>
   );
 }

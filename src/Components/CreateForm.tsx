@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 `;
 
 const Form = styled.form`
-  width: 200px;
+  width: 300px;
   input {
     width: 100%;
   }
@@ -20,7 +20,7 @@ const Form = styled.form`
 const Input = styled.input`
   border-style: none;
   padding: 10px 20px;
-  font-size: 20px;
+  font-size: 16px;
   border-radius: 30px;
   text-align: center;
   ::placeholder {
@@ -32,7 +32,7 @@ interface IForm {
   boardId: string;
 }
 
-function CreateBoard() {
+function CreateForm() {
   const { register, setValue, handleSubmit } = useForm<IForm>();
   const addBoard = useSetRecoilState(toDoState);
   const onValid = ({ boardId }: IForm) => {
@@ -47,11 +47,11 @@ function CreateBoard() {
         <Input
           {...register("boardId", { required: true })}
           type="text"
-          placeholder="Create Board"
+          placeholder="Create Board: Enter BoardName"
         />
       </Form>
     </Wrapper>
   );
 }
 
-export default CreateBoard;
+export default CreateForm;
