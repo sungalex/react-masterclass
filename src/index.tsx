@@ -61,8 +61,8 @@ table {
 }
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  background-color: ${(props) => props.theme.bgColor};
   color: black;
+  background:linear-gradient(135deg,#e09,#d0e);
 }
 a {
   text-decoration: none;
