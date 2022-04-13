@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
-import { toDoState } from "../atoms";
+import { toDoState, trashState } from "../atoms";
 
 const Wrapper = styled.div`
   margin-top: 20px;
@@ -11,20 +11,24 @@ const Wrapper = styled.div`
 `;
 
 const Form = styled.form`
-  width: 200px;
+  width: 300px;
   input {
     width: 100%;
   }
 `;
 
 const Input = styled.input`
+  background-color: ${(props) => props.theme.cardColor};
   border-style: none;
   padding: 10px 20px;
-  font-size: 20px;
+  font-size: 16px;
   border-radius: 30px;
   text-align: center;
   ::placeholder {
-    color: ${(props) => props.theme.boardColor};
+    color: #a7a7a7;
+  }
+  :focus {
+    outline: 3px solid rgba(255, 255, 255, 0.7);
   }
 `;
 
@@ -32,11 +36,15 @@ interface IForm {
   boardId: string;
 }
 
-function CreateBoard() {
+function CreateForm() {
   const { register, setValue, handleSubmit } = useForm<IForm>();
   const addBoard = useSetRecoilState(toDoState);
+  const addTrash = useSetRecoilState(trashState);
   const onValid = ({ boardId }: IForm) => {
     addBoard((tasks) => {
+      return { ...tasks, [boardId]: [] };
+    });
+    addTrash((tasks) => {
       return { ...tasks, [boardId]: [] };
     });
     setValue("boardId", "");
@@ -47,11 +55,12 @@ function CreateBoard() {
         <Input
           {...register("boardId", { required: true })}
           type="text"
-          placeholder="Create Board"
+          placeholder="Create Board: Enter BoardName"
+          autoComplete="off"
         />
       </Form>
     </Wrapper>
   );
 }
 
-export default CreateBoard;
+export default CreateForm;

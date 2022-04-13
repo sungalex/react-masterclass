@@ -2,9 +2,19 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## TRELLO CLONE
+## TRELLO TODO
 
-- React Trello Clone with [react-beautiful-dnd](https://www.npmjs.com/package/react-beautiful-dnd)
+- 강의: [React JS 마스터클래스 - STATE MANAGEMENT](https://nomadcoders.co/react-masterclass/lectures/3348) and [React JS 마스터클래스 - TRELLO CLONE](https://nomadcoders.co/react-masterclass/lectures/3371)
+
+  - React ToDo App with [Recoil for State Management](https://recoiljs.org/ko/) and [React Hook Form](https://react-hook-form.com/get-started)
+
+  - React Trello Clone with [react-beautiful-dnd for Drag and Drop](https://www.npmjs.com/package/react-beautiful-dnd)
+
+- Code Challenge : Watch all the section #5 and use Recoil to extend the To Do list that we make on the lecture with these two features:
+
+  - Allow users to create custom categories.
+
+  - Implement persistance to localStorage.
 
 ## Available Scripts
 

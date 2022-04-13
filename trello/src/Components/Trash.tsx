@@ -3,17 +3,17 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { useRecoilValue } from "recoil";
-import { toDoState, trashState } from "../atoms";
+import { toDoState } from "../atoms";
 
 const Wrapper = styled.div<{ length: number }>`
   position: absolute;
-  right: calc(100vw / (${(props) => props.length} * 2) - 10px);
-  top: 75px;
+  bottom: 15px;
+  left: calc(100vw / 2 - 30px);
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
 `;
 
 const Icon = styled.span`
@@ -21,16 +21,21 @@ const Icon = styled.span`
   color: white;
   font-size: 150%;
   padding: 5px;
+  :hover {
+    color: #fff700;
+    font-size: 300%;
+  }
 `;
 
+const Area = styled.div``;
+
 function Trash() {
-  const trashBoards = useRecoilValue(trashState);
   const toDos = useRecoilValue(toDoState);
   let length = Object.keys(toDos).length;
   if (length < 3) {
     length = 3;
   }
-  console.log("Trash Boards:", trashBoards);
+
   return (
     <Wrapper length={length}>
       <Icon>
@@ -38,9 +43,9 @@ function Trash() {
       </Icon>
       <Droppable droppableId="Trash" isCombineEnabled={true}>
         {(provided, snapshot) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
+          <Area ref={provided.innerRef} {...provided.droppableProps}>
             {provided.placeholder}
-          </div>
+          </Area>
         )}
       </Droppable>
     </Wrapper>
