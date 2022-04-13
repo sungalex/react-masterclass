@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   min-width: 150px;
   width: 100vw;
   min-height: 300px;
-  max-height: calc(100vh - 180px);
+  max-height: calc(100vh - 220px);
   padding-top: 10px;
   background-color: ${(props) => props.theme.boardColor};
   border-radius: 5px;
@@ -32,16 +32,19 @@ const Form = styled.form`
   input {
     width: 100%;
   }
-  padding: 0px 5px;
+  padding: 0px 10px;
 `;
 
 const Input = styled.input`
   border-style: none;
   padding: 10px 15px;
-  border-radius: 20px;
+  border-radius: 5px;
   text-align: center;
   ::placeholder {
-    color: #b2bec3;
+    color: #a7a7a7;
+  }
+  :focus {
+    outline: 2px solid #93c2ff;
   }
 `;
 
@@ -90,6 +93,7 @@ function Board({ boardId, toDos }: IBoardProps) {
           {...register("toDo", { required: true })}
           type="text"
           placeholder={`Add task on ${boardId}`}
+          autoComplete="off"
         />
       </Form>
       <Droppable droppableId={boardId}>
