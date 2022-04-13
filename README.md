@@ -2,6 +2,26 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Crypto Tracker
+
+- React ToDo App with TypeScript, [Styled Components](https://styled-components.com/docs), [React Query](https://react-query.tanstack.com/overview), [React Router](https://reactrouter.com/docs/en/v6)
+
+- [React JS 마스터클래스 - CRYPTO TRACKER](https://nomadcoders.co/react-masterclass/lectures/3322)
+
+- [coinpaprika](https://api.coinpaprika.com/#tag/Coins)
+
+- Repository : [https://github.com/sungalex/react-masterclass/tree/crypto_tracker](https://github.com/sungalex/react-masterclass/tree/crypto_tracker)
+
+- Github Pages : [https://sungalex.github.io/react-masterclass/](https://sungalex.github.io/react-masterclass/)
+
+## ToDo App
+
+- React ToDo App with [Recoil for State Management](https://recoiljs.org/ko/) and [React Hook Form](https://react-hook-form.com/get-started)
+
+- [React JS 마스터클래스 - STATE MANAGEMENT](https://nomadcoders.co/react-masterclass/lectures/3348)
+
+- Repository : [https://github.com/sungalex/react-masterclass/tree/todo_app](https://github.com/sungalex/react-masterclass/tree/todo_app)
+
 ## TRELLO TODO
 
 - 강의: [React JS 마스터클래스 - STATE MANAGEMENT](https://nomadcoders.co/react-masterclass/lectures/3348) and [React JS 마스터클래스 - TRELLO CLONE](https://nomadcoders.co/react-masterclass/lectures/3371)
@@ -15,6 +35,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
   - Allow users to create custom categories.
 
   - Implement persistance to localStorage.
+
+- Repository : [trello Branch](https://github.com/sungalex/react-masterclass/tree/trello) and [Trello ToDo Challenge](https://github.com/sungalex/trello-todo)
+
+- Github Pages : [https://sungalex.github.io/trello-todo/](https://sungalex.github.io/trello-todo/)
 
 ## Available Scripts
 
