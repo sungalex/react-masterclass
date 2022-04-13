@@ -8,7 +8,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - [React JS 마스터클래스 - CRYPTO TRACKER](https://nomadcoders.co/react-masterclass/lectures/3322)
 
-- [coinpaprika](https://api.coinpaprika.com/#tag/Coins)
+- Crypto API : [coinpaprika](https://api.coinpaprika.com/#tag/Coins)
 
 - Repository : [https://github.com/sungalex/react-masterclass/tree/crypto_tracker](https://github.com/sungalex/react-masterclass/tree/crypto_tracker)
 
