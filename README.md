@@ -2,7 +2,7 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## TRELLO CLONE
+## TRELLO TODO
 
 - 강의: [React JS 마스터클래스 - STATE MANAGEMENT](https://nomadcoders.co/react-masterclass/lectures/3348) and [React JS 마스터클래스 - TRELLO CLONE](https://nomadcoders.co/react-masterclass/lectures/3371)
 

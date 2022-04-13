@@ -146,10 +146,11 @@ function App() {
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Title>Trello Clone</Title>
+      <Title>Trello ToDo</Title>
       <CreateForm />
       <Wrapper>
         <Boards>
+          {/* TODO: Bug-fix --> error when first time loaded */}
           {toDos !== null && typeof toDos !== "undefined"
             ? Object.keys(toDos).map((boardId) => (
                 <Board boardId={boardId} key={boardId} toDos={toDos[boardId]} />
