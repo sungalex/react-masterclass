@@ -5,30 +5,22 @@ import styled from "styled-components";
 const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: #e429cd;
-  display: grid;
-  grid-template-rows: 5fr 1fr;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const Boards = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: relative;
 `;
 
-const BoxGrid = styled(motion.div)`
+const BoxGrid = styled.div`
   display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: 5px;
   grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 `;
 
-const Box = styled(motion.div)<IBox>`
+const Box = styled(motion.div)`
   width: 300px;
   height: 200px;
   background-color: rgba(255, 255, 255, 0.4);
@@ -36,12 +28,6 @@ const Box = styled(motion.div)<IBox>`
   display: flex;
   justify-content: center;
   align-items: center;
-  :hover {
-    width: 105%;
-    height: 105%;
-    justify-self: ${(props) => (props.isLeft ? "flex-end" : "flex-start")};
-    align-self: ${(props) => (props.isUp ? "flex-end" : "flex-start")};
-  }
 `;
 
 const Circle = styled(motion.div)`
@@ -55,55 +41,49 @@ const Circle = styled(motion.div)`
 const Overlay = styled(motion.div)`
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const OverlayBox = styled(motion.div)`
-  width: 400px;
-  height: 300px;
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 10px;
-`;
-
 const ButtonWrapper = styled.div`
-  width: 100%;
-  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
 `;
 
-const Button = styled.button<IButton>`
+const Button = styled(motion.button)<IButton>`
   border-style: none;
   background-color: white;
   border-radius: 5px;
   padding: 5px 10px;
+  margin-top: 30px;
   font-size: 16px;
   font-weight: 600;
+  color: ${(props) => (props.isSwitch ? "#e17055" : "#0984e3")};
   :hover {
     cursor: pointer;
   }
   :active {
     font-size: 20px;
   }
-  color: ${(props) => (props.isSwitch ? "#e17055" : "#6c5ce7")};
 `;
 
-// const boxVariant = {
-//   initial: { opecity: 0 },
-//   visable: { opecity: 1 },
-//   exit: { opecity: 0 },
-// };
+const overlay = {
+  hidden: { backgroundColor: "rgba(0, 0, 0, 0)" },
+  visible: { backgroundColor: "rgba(0, 0, 0, 0.5)", marginBottom: "40px" },
+  exit: { backgroundColor: "rgba(0, 0, 0, 0)" },
+};
 
-interface IBox {
-  isUp: boolean;
-  isLeft: boolean;
-  layoutId: string;
-}
+const overlayBox = {
+  hidden: {},
+  visible: {
+    width: "400px",
+    height: "300px",
+    backgroundColor: "rgba(255, 255, 255, 1)",
+  },
+  exit: {},
+};
 
 interface IButton {
   isSwitch: boolean;
@@ -111,62 +91,36 @@ interface IButton {
 
 export default function App() {
   const [isSwitch, setSwitch] = useState(false);
-  const [isOverlay, setOverlay] = useState(false);
-  const [boxId, setBoxId] = useState("");
+  const [boxId, setBoxId] = useState<null | string>(null);
   const toggleSwitch = () => {
     setSwitch((prev) => !prev);
   };
-  const onOverlay = (boxId: string) => {
-    setOverlay((prev) => !prev);
-    setBoxId(boxId);
-  };
   return (
     <Wrapper>
-      <Boards>
-        <AnimatePresence>
-          <BoxGrid>
-            <Box
-              isUp={true}
-              isLeft={true}
-              layoutId="one"
-              onClick={() => onOverlay("one")}
-            />
-            <Box
-              isUp={true}
-              isLeft={false}
-              layoutId="two"
-              onClick={() => onOverlay("two")}>
-              {!isSwitch ? <Circle layoutId="circle" /> : null}
-            </Box>
-            <Box
-              isUp={false}
-              isLeft={true}
-              layoutId="three"
-              onClick={() => onOverlay("three")}>
-              {isSwitch ? <Circle layoutId="circle" /> : null}
-            </Box>
-            <Box
-              isUp={false}
-              isLeft={false}
-              layoutId="four"
-              onClick={() => onOverlay("four")}
-            />
-          </BoxGrid>
-          {isOverlay ? (
-            <Overlay onClick={() => onOverlay("")}>
-              <OverlayBox
-                layoutId={boxId}
-                // variants={boxVariant}
-                // initial="initial"
-                // animate="visable"
-                // exit="exit"
-              />
-            </Overlay>
-          ) : null}
-        </AnimatePresence>
-      </Boards>
+      <BoxGrid>
+        <Box layoutId="1" onClick={() => setBoxId("1")} />
+        <Box layoutId="2" onClick={() => setBoxId("2")}>
+          {!isSwitch ? <Circle layoutId="circle" /> : null}
+        </Box>
+        <Box layoutId="3" onClick={() => setBoxId("3")}>
+          {isSwitch ? <Circle layoutId="circle" /> : null}
+        </Box>
+        <Box layoutId="4" onClick={() => setBoxId("4")} />
+      </BoxGrid>
+      <AnimatePresence>
+        {boxId ? (
+          <Overlay
+            variants={overlay}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onClick={() => setBoxId(null)}>
+            <Box layoutId={boxId} variants={overlayBox} />
+          </Overlay>
+        ) : null}
+      </AnimatePresence>
       <ButtonWrapper>
-        <Button isSwitch={isSwitch} onClick={toggleSwitch}>
+        <Button onClick={toggleSwitch} isSwitch={isSwitch}>
           Switch
         </Button>
       </ButtonWrapper>
