@@ -40,6 +40,16 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 - Github Pages : [https://sungalex.github.io/trello-todo/](https://sungalex.github.io/trello-todo/)
 
+## Animations
+
+- 강의: [React JS 마스터클래스 - ANIMATIONS](https://nomadcoders.co/react-masterclass/lectures/3384)
+
+- [Framer Motion](https://www.framer.com/motion/) : A production-ready motion library for React. Proudly open source.
+
+- Repository : [animations Branch](https://github.com/sungalex/react-masterclass/tree/animations)
+
+- Code Challenge : [Codesandbox](https://codesandbox.io/s/framer-motion-board-syc1ul)
+
 ## Available Scripts
 
 In the project directory, you can run:
